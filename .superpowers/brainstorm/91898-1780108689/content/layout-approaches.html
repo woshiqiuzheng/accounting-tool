@@ -1,0 +1,77 @@
+<h2>记账工具 — 三种界面布局方案</h2>
+<p class="subtitle">请看看哪种布局更符合你的预期，选一种继续深入</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">推荐</div>
+    <div class="content">
+      <h3>方案 A：单窗口 + 侧边栏导航</h3>
+      <div class="mockup" style="margin:12px 0">
+        <div style="display:flex;height:120px;border:1px solid #ccc;border-radius:6px;overflow:hidden">
+          <div style="width:60px;background:#2b2b2b;color:white;padding:8px;font-size:10px;display:flex;flex-direction:column;gap:6px">
+            <div>📊</div>
+            <div>➕</div>
+            <div>📋</div>
+            <div>📈</div>
+            <div>💰</div>
+            <div>⚙️</div>
+          </div>
+          <div style="flex:1;padding:8px;background:#f5f5f5;font-size:10px">
+            <div style="background:white;padding:6px;border-radius:4px;height:100%">
+              <div style="color:#666;margin-bottom:4px">2026年5月 · 收支总览</div>
+              <div style="display:flex;gap:16px;margin-bottom:4px">
+                <span style="color:green">收入 ¥5,200</span>
+                <span style="color:red">支出 ¥3,800</span>
+              </div>
+              <div style="height:30px;background:#eee;border-radius:3px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p>📌 侧边栏固定，主内容区随点击切换。所有操作在一个窗口内完成，体验连贯。</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>方案 B：选项卡 + 顶部导航</h3>
+      <div class="mockup" style="margin:12px 0">
+        <div style="display:flex;flex-direction:column;height:120px;border:1px solid #ccc;border-radius:6px;overflow:hidden">
+          <div style="display:flex;gap:2px;background:#f0f0f0;padding:4px;font-size:10px">
+            <div style="background:white;padding:4px 8px;border-radius:4px 4px 0 0">📊 总览</div>
+            <div style="padding:4px 8px;color:#666">➕ 记账</div>
+            <div style="padding:4px 8px;color:#666">📋 账单</div>
+            <div style="padding:4px 8px;color:#666">📈 统计</div>
+            <div style="padding:4px 8px;color:#666">💰 预算</div>
+          </div>
+          <div style="flex:1;padding:8px;background:white;font-size:10px">
+            <div style="color:#666">选项卡式布局，类似浏览器标签页</div>
+          </div>
+        </div>
+      </div>
+      <p>📌 顶部 Tab 切换，简单直接。但功能多时 Tab 栏会拥挤。</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>方案 C：多窗口 + 弹出对话框</h3>
+      <div class="mockup" style="margin:12px 0">
+        <div style="display:flex;flex-direction:column;height:120px;border:1px solid #ccc;border-radius:6px;overflow:hidden;background:#f5f5f5;font-size:10px;padding:8px">
+          <div style="background:white;padding:6px;border-radius:4px;height:100%">
+            <div style="color:#666;margin-bottom:4px">账单列表（主窗口）</div>
+            <div style="display:flex;flex-direction:column;gap:3px">
+              <div style="background:#f9f9f9;padding:3px;border-radius:2px">5/30 午餐 ¥35 餐饮</div>
+              <div style="background:#f9f9f9;padding:3px;border-radius:2px">5/30 打车 ¥20 交通</div>
+              <div style="background:#f9f9f9;padding:3px;border-radius:2px">5/29 超市 ¥158 购物</div>
+            </div>
+          </div>
+          <div style="width:90px;border:1px dashed #aaa;border-radius:4px;padding:6px;margin-top:4px;background:white;font-size:9px;color:#666">弹出：添加账单</div>
+        </div>
+      </div>
+      <p>📌 主窗口只做列表，新增/编辑/统计都弹独立窗口。实现最简单，但操作有割裂感。</p>
+    </div>
+  </div>
+</div>

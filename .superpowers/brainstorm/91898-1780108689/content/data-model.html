@@ -1,0 +1,71 @@
+<h2>数据模型设计 — SQLite 表结构</h2>
+<p class="subtitle">四个核心表，覆盖记账所有场景</p>
+
+<div class="section">
+  <h3>① 账单表（transactions）</h3>
+  <div style="background:white;border-radius:8px;padding:12px;margin-bottom:16px;font-size:12px;box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+    <table style="width:100%;border-collapse:collapse">
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #eee;font-weight:bold;color:#333">id</td><td style="padding:4px 8px;border-bottom:1px solid #eee;color:#888">INTEGER PK</td><td style="padding:4px 8px;border-bottom:1px solid #eee">自动编号</td></tr>
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #eee;font-weight:bold;color:#333">type</td><td style="padding:4px 8px;border-bottom:1px solid #eee;color:#888">TEXT</td><td style="padding:4px 8px;border-bottom:1px solid #eee">'income' / 'expense' / 'transfer'</td></tr>
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #eee;font-weight:bold;color:#333">amount</td><td style="padding:4px 8px;border-bottom:1px solid #eee;color:#888">REAL</td><td style="padding:4px 8px;border-bottom:1px solid #eee">金额（正数）</td></tr>
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #eee;font-weight:bold;color:#333">category_id</td><td style="padding:4px 8px;border-bottom:1px solid #eee;color:#888">INTEGER FK</td><td style="padding:4px 8px;border-bottom:1px solid #eee">关联 categories 表</td></tr>
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #eee;font-weight:bold;color:#333">account_id</td><td style="padding:4px 8px;border-bottom:1px solid #eee;color:#888">INTEGER FK</td><td style="padding:4px 8px;border-bottom:1px solid #eee">关联 accounts 表</td></tr>
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #eee;font-weight:bold;color:#333">to_account_id</td><td style="padding:4px 8px;border-bottom:1px solid #eee;color:#888">INTEGER FK</td><td style="padding:4px 8px;border-bottom:1px solid #eee">转账目标账户（仅转账类型）</td></tr>
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #eee;font-weight:bold;color:#333">note</td><td style="padding:4px 8px;border-bottom:1px solid #eee;color:#888">TEXT</td><td style="padding:4px 8px;border-bottom:1px solid #eee">备注</td></tr>
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #eee;font-weight:bold;color:#333">date</td><td style="padding:4px 8px;border-bottom:1px solid #eee;color:#888">TEXT</td><td style="padding:4px 8px;border-bottom:1px solid #eee">日期 YYYY-MM-DD</td></tr>
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #eee;font-weight:bold;color:#333">created_at</td><td style="padding:4px 8px;border-bottom:1px solid #eee;color:#888">TEXT</td><td style="padding:4px 8px;border-bottom:1px solid #eee">创建时间</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:bold;color:#333">updated_at</td><td style="padding:4px 8px;color:#888">TEXT</td><td style="padding:4px 8px">修改时间</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="section">
+  <h3>② 分类表（categories）</h3>
+  <div style="background:white;border-radius:8px;padding:12px;margin-bottom:16px;font-size:12px;box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+    <table style="width:100%;border-collapse:collapse">
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #eee;font-weight:bold;color:#333">id</td><td style="padding:4px 8px;border-bottom:1px solid #eee;color:#888">INTEGER PK</td><td style="padding:4px 8px;border-bottom:1px solid #eee">自动编号</td></tr>
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #eee;font-weight:bold;color:#333">name</td><td style="padding:4px 8px;border-bottom:1px solid #eee;color:#888">TEXT</td><td style="padding:4px 8px;border-bottom:1px solid #eee">分类名称</td></tr>
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #eee;font-weight:bold;color:#333">type</td><td style="padding:4px 8px;border-bottom:1px solid #eee;color:#888">TEXT</td><td style="padding:4px 8px;border-bottom:1px solid #eee">'income' / 'expense'</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:bold;color:#333">icon</td><td style="padding:4px 8px;color:#888;border-bottom:1px solid #eee">TEXT</td><td style="padding:4px 8px;border-bottom:1px solid #eee">图标 emoji 🍜🚗🛒</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:bold;color:#333">sort_order</td><td style="padding:4px 8px;color:#888">INTEGER</td><td style="padding:4px 8px">排序序号</td></tr>
+    </table>
+  </div>
+
+  <h4>预置分类</h4>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px">
+    <div style="background:white;border-radius:6px;padding:8px;box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+      <div style="font-weight:bold;color:red;margin-bottom:4px">💸 支出类</div>
+      <div>🍜 餐饮 · 🚗 交通 · 🛒 购物 · 🏠 居住 · 📱 通讯 · 🎮 娱乐 · 🏥 医疗 · 📚 教育 · 🎁 人情 · ✈️ 旅行 · ❓ 其他</div>
+    </div>
+    <div style="background:white;border-radius:6px;padding:8px;box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+      <div style="font-weight:bold;color:green;margin-bottom:4px">💰 收入类</div>
+      <div>💼 工资 · 🏪 兼职 · 🎯 奖金 · 📈 理财 · 🧧 红包 · ❓ 其他</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>③ 账户表（accounts）</h3>
+  <div style="background:white;border-radius:8px;padding:12px;margin-bottom:16px;font-size:12px;box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+    <table style="width:100%;border-collapse:collapse">
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #eee;font-weight:bold;color:#333">id</td><td style="padding:4px 8px;border-bottom:1px solid #eee;color:#888">INTEGER PK</td><td style="padding:4px 8px;border-bottom:1px solid #eee">自动编号</td></tr>
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #eee;font-weight:bold;color:#333">name</td><td style="padding:4px 8px;border-bottom:1px solid #eee;color:#888">TEXT</td><td style="padding:4px 8px;border-bottom:1px solid #eee">账户名称</td></tr>
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #eee;font-weight:bold;color:#333">balance</td><td style="padding:4px 8px;border-bottom:1px solid #eee;color:#888">REAL</td><td style="padding:4px 8px;border-bottom:1px solid #eee">当前余额</td></tr>
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #eee;font-weight:bold;color:#333">icon</td><td style="padding:4px 8px;color:#888;border-bottom:1px solid #eee">TEXT</td><td style="padding:4px 8px;border-bottom:1px solid #eee">图标 emoji</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:bold;color:#333">sort_order</td><td style="padding:4px 8px;color:#888">INTEGER</td><td style="padding:4px 8px">排序序号</td></tr>
+    </table>
+    <div style="margin-top:8px;color:#888;font-size:11px">💡 预置：💳 现金、🏦 银行卡、📱 支付宝、💚 微信支付</div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>④ 预算表（budgets）</h3>
+  <div style="background:white;border-radius:8px;padding:12px;margin-bottom:16px;font-size:12px;box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+    <table style="width:100%;border-collapse:collapse">
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #eee;font-weight:bold;color:#333">id</td><td style="padding:4px 8px;border-bottom:1px solid #eee;color:#888">INTEGER PK</td><td style="padding:4px 8px;border-bottom:1px solid #eee">自动编号</td></tr>
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #eee;font-weight:bold;color:#333">category_id</td><td style="padding:4px 8px;border-bottom:1px solid #eee;color:#888">INTEGER FK</td><td style="padding:4px 8px;border-bottom:1px solid #eee">关联分类</td></tr>
+      <tr><td style="padding:4px 8px;border-bottom:1px solid #eee;font-weight:bold;color:#333">month</td><td style="padding:4px 8px;border-bottom:1px solid #eee;color:#888">TEXT</td><td style="padding:4px 8px;border-bottom:1px solid #eee">预算月份  YYYY-MM</td></tr>
+      <tr><td style="padding:4px 8px;font-weight:bold;color:#333">amount</td><td style="padding:4px 8px;color:#888">REAL</td><td style="padding:4px 8px">预算金额</td></tr>
+    </table>
+  </div>
+</div>
