@@ -16,7 +16,10 @@ def set_budget(conn: sqlite3.Connection, category_id: int, month: str, amount: f
 
 def get_budget(conn: sqlite3.Connection, category_id: int, month: str) -> Optional[sqlite3.Row]:
     return conn.execute(
-        "SELECT * FROM budgets WHERE category_id=? AND month=?",
+        """SELECT b.*, c.name as category_name, c.icon as category_icon
+           FROM budgets b
+           JOIN categories c ON b.category_id = c.id
+           WHERE b.category_id=? AND b.month=?""",
         (category_id, month),
     ).fetchone()
 

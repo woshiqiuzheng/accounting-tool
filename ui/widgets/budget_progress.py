@@ -54,11 +54,9 @@ class BudgetProgress(ctk.CTkFrame):
         progress_frame.pack(fill="x", padx=10, pady=(0, 8))
         progress_frame.pack_propagate(False)
 
-        pct = min(status["percentage"], 100)
-        fill_width = max(int(pct), 5)
-        fill = ctk.CTkFrame(progress_frame, width=fill_width, height=20, fg_color=bar_color, corner_radius=10)
-        fill.place(x=0, y=0)
-        fill.pack_propagate(False)
+        pct = min(status["percentage"] / 100.0, 1.0)
+        fill = ctk.CTkFrame(progress_frame, height=20, fg_color=bar_color, corner_radius=10)
+        fill.place(relwidth=max(pct, 0.05), x=0, y=0)
 
         pct_label = ctk.CTkLabel(
             progress_frame,

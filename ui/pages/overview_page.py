@@ -34,7 +34,18 @@ class OverviewPage(BasePage):
 
         recent_frame = ctk.CTkFrame(bottom, fg_color="transparent")
         recent_frame.grid(row=0, column=0, sticky="nsew", padx=(0, 8))
-        ctk.CTkLabel(recent_frame, text="最近账单", font=ctk.CTkFont(size=14, weight="bold")).pack(anchor="w", pady=(0, 4))
+        recent_header = ctk.CTkFrame(recent_frame, fg_color="transparent")
+        recent_header.pack(fill="x", pady=(0, 4))
+        ctk.CTkLabel(recent_header, text="最近账单", font=ctk.CTkFont(size=14, weight="bold")).pack(side="left")
+        view_all_btn = ctk.CTkButton(
+            recent_header, text="查看全部 →",
+            width=80, height=24,
+            fg_color="transparent", text_color=("blue", "lightblue"),
+            hover_color=("gray85", "gray25"),
+            font=ctk.CTkFont(size=11),
+            command=lambda: self.app.show_page(2),
+        )
+        view_all_btn.pack(side="right")
         self.recent_list = TransactionList(recent_frame, limit=5, show_header=False)
         self.recent_list.pack(fill="both", expand=True)
 
