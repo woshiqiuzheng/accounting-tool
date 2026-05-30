@@ -21,8 +21,7 @@ class App(ctk.CTk):
         super().__init__()
         self.title("📒 个人记账本")
         self.geometry("1000x700")
-        self.minsize(900, 600)
-        self.resizable(True, True)
+        self.resizable(False, False)
 
         # Initialize database
         from database.connection import init_db
