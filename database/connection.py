@@ -1,16 +1,17 @@
 """Database connection manager — single file-based SQLite connection."""
 
 import sqlite3
-import os
 import shutil
 from pathlib import Path
+
+from database import schema, seed
 
 DB_DIR = Path.home() / ".personal_accounting"
 DB_PATH = DB_DIR / "data.db"
 
 
 def get_connection() -> sqlite3.Connection:
-    """Return the singleton database connection, creating it if needed."""
+    """Return a database connection to the SQLite file."""
     DB_DIR.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(str(DB_PATH))
     conn.execute("PRAGMA journal_mode=WAL")
@@ -33,7 +34,3 @@ def backup_and_rebuild():
         shutil.copy2(DB_PATH, backup)
         DB_PATH.unlink()
     init_db()
-
-
-# Late imports to avoid circular deps at module level
-from database import schema, seed

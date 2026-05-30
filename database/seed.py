@@ -36,8 +36,9 @@ DEFAULT_ACCOUNTS = [
 
 def seed_data(conn: sqlite3.Connection):
     """Insert preset data if tables are empty."""
-    cur = conn.execute("SELECT COUNT(*) FROM categories")
-    if cur.fetchone()[0] > 0:
+    cat_count = conn.execute("SELECT COUNT(*) FROM categories").fetchone()[0]
+    acc_count = conn.execute("SELECT COUNT(*) FROM accounts").fetchone()[0]
+    if cat_count > 0 and acc_count > 0:
         return  # already seeded
 
     for name, typ, icon, sort_order in EXPENSE_CATEGORIES + INCOME_CATEGORIES:
