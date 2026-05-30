@@ -9,10 +9,11 @@ from utils.helpers import format_currency
 class TransactionList(ctk.CTkScrollableFrame):
     """Scrollable list of transactions grouped by date."""
 
-    def __init__(self, parent, limit: int = 20, on_edit: Optional[Callable] = None, show_header: bool = True, **kwargs):
+    def __init__(self, parent, limit: int = 20, on_edit: Optional[Callable] = None, on_delete: Optional[Callable] = None, show_header: bool = True, **kwargs):
         super().__init__(parent, **kwargs)
         self.limit = limit
         self.on_edit = on_edit
+        self.on_delete = on_delete
         self.show_header = show_header
         self._offset = 0
         self._all_loaded = False
@@ -103,11 +104,21 @@ class TransactionList(ctk.CTkScrollableFrame):
             frame.bind("<Button-1>", lambda e, tid=t["id"]: self.on_edit(tid))
 
         inner = ctk.CTkFrame(frame, fg_color="transparent")
-        inner.pack(fill="both", expand=True, padx=10, pady=6)
+        inner.pack(fill="both", expand=True, padx=6, pady=6)
 
-        ctk.CTkLabel(inner, text=f"{icon}  {cat_name}", font=ctk.CTkFont(size=13), width=120, anchor="w").pack(side="left")
-        ctk.CTkLabel(inner, text=note, font=ctk.CTkFont(size=12), text_color="gray", width=200, anchor="w").pack(side="left", padx=10)
-        ctk.CTkLabel(inner, text=account_text, font=ctk.CTkFont(size=11), text_color="gray", width=100, anchor="w").pack(side="left")
-        ctk.CTkLabel(inner, text=amount_text, font=ctk.CTkFont(size=14, weight="bold"), text_color=amount_color).pack(side="right")
+        ctk.CTkLabel(inner, text=f"{icon}  {cat_name}", font=ctk.CTkFont(size=13), width=110, anchor="w").pack(side="left")
+        ctk.CTkLabel(inner, text=note, font=ctk.CTkFont(size=12), text_color="gray", width=170, anchor="w").pack(side="left", padx=6)
+        ctk.CTkLabel(inner, text=account_text, font=ctk.CTkFont(size=11), text_color="gray", width=80, anchor="w").pack(side="left")
+        ctk.CTkLabel(inner, text=amount_text, font=ctk.CTkFont(size=14, weight="bold"), text_color=amount_color, width=100, anchor="e").pack(side="left")
+
+        if self.on_delete:
+            del_btn = ctk.CTkButton(
+                inner, text="🗑", width=28, height=28,
+                fg_color="transparent", text_color=("#c62828", "#ef5350"),
+                hover_color=("#ffcdd2", "#37474f"),
+                font=ctk.CTkFont(size=12),
+                command=lambda tid=t["id"]: self.on_delete(tid),
+            )
+            del_btn.pack(side="right", padx=(2, 0))
 
         return frame

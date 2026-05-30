@@ -49,7 +49,7 @@ class BillsPage(BasePage):
         ctk.CTkButton(filter_frame, text="重置", width=60, fg_color="transparent", border_width=1,
                       command=self._reset_filters).pack(side="left", padx=4)
 
-        self.tx_list = TransactionList(self, limit=20, on_edit=self._edit_transaction)
+        self.tx_list = TransactionList(self, limit=20, on_edit=self._edit_transaction, on_delete=self._quick_delete)
         self.tx_list.pack(fill="both", expand=True, padx=20, pady=8)
         self._edit_dialog = None
 
@@ -129,4 +129,12 @@ class BillsPage(BasePage):
         Toast.show(dialog.winfo_toplevel(), "删除成功", success=True)
         dialog.destroy()
         self._edit_dialog = None
+        self._apply_filters()
+
+    def _quick_delete(self, transaction_id: int):
+        """Delete a transaction directly from the list with confirmation."""
+        if not mb.askyesno("确认删除", "确定要删除这条账单记录吗？"):
+            return
+        delete_transaction(self.app.conn, transaction_id)
+        Toast.show(self.winfo_toplevel(), "删除成功", success=True)
         self._apply_filters()
