@@ -1,16 +1,15 @@
-import customtkinter as ctk
+"""Personal Accounting — Entry Point.
+
+A lightweight desktop personal accounting tool built with
+CustomTkinter, SQLite, and Matplotlib.
+"""
+
+from ui.app import App
 
 
-def main() -> None:
-    ctk.set_appearance_mode("system")
-    ctk.set_default_color_theme("green")
-
-    root = ctk.CTk()
-    root.title("Personal Accounting Tool")
-    root.geometry("1024x768")
-    root.minsize(800, 600)
-
-    root.mainloop()
+def main():
+    app = App()
+    app.mainloop()
 
 
 if __name__ == "__main__":
