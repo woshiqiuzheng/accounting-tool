@@ -5,6 +5,7 @@ import tkinter.messagebox as mb
 import csv
 from tkinter import filedialog
 from ui.base_page import BasePage
+from ui.widgets.toast import Toast
 from models.category import (
     get_categories_by_type, add_category, update_category,
     delete_category, get_category_usage_count, reset_to_defaults,
@@ -79,6 +80,7 @@ class SettingsPage(BasePage):
 
             def save():
                 update_category(self.app.conn, cat["id"], name_entry.get(), icon_entry.get(), cat["sort_order"])
+                Toast.show(dialog.winfo_toplevel(), "分类已保存", success=True)
                 dialog.destroy()
                 self._refresh_category_list()
             ctk.CTkButton(dialog, text="保存", command=save).pack(pady=12)
@@ -92,6 +94,7 @@ class SettingsPage(BasePage):
                 return
             if mb.askyesno("确认删除", f"确定要删除分类「{cat['name']}」吗？"):
                 delete_category(self.app.conn, cat["id"])
+                Toast.show(self.winfo_toplevel(), "分类已删除", success=True)
                 self._refresh_category_list()
         ctk.CTkButton(row, text="🗑", width=30, fg_color="transparent", text_color="#c62828", command=delete).pack(side="right", padx=4)
 
@@ -115,6 +118,7 @@ class SettingsPage(BasePage):
         def save():
             if name_entry.get():
                 add_category(self.app.conn, name_entry.get(), type_var.get(), icon_entry.get() or "❓")
+                Toast.show(dialog.winfo_toplevel(), "分类已保存", success=True)
                 dialog.destroy()
                 self._refresh_category_list()
         ctk.CTkButton(dialog, text="保存", command=save).pack(pady=12)
@@ -122,6 +126,7 @@ class SettingsPage(BasePage):
     def _reset_categories(self):
         if mb.askyesno("确认重置", "将恢复所有分类为默认设置，确定吗？"):
             reset_to_defaults(self.app.conn)
+            Toast.show(self.winfo_toplevel(), "已恢复默认分类", success=True)
             self._refresh_category_list()
 
     # --- Account Tab ---
@@ -149,6 +154,7 @@ class SettingsPage(BasePage):
             new_bal = askfloat("修改余额", f"输入 {account['name']} 的新余额:", initialvalue=account["balance"])
             if new_bal is not None:
                 update_balance(self.app.conn, account["id"], new_bal)
+                Toast.show(self.winfo_toplevel(), "余额已更新", success=True)
                 self._refresh_account_list()
         ctk.CTkButton(row, text="💰调余额", width=70, command=edit_balance).pack(side="right", padx=4)
 
@@ -169,6 +175,7 @@ class SettingsPage(BasePage):
 
             def save():
                 update_account(self.app.conn, account["id"], name_entry.get(), icon_entry.get(), account["sort_order"])
+                Toast.show(dialog.winfo_toplevel(), "账户已保存", success=True)
                 dialog.destroy()
                 self._refresh_account_list()
             ctk.CTkButton(dialog, text="保存", command=save).pack(pady=12)
@@ -181,6 +188,7 @@ class SettingsPage(BasePage):
                 return
             if mb.askyesno("确认删除", f"确定要删除账户「{account['name']}」吗？"):
                 delete_account(self.app.conn, account["id"])
+                Toast.show(self.winfo_toplevel(), "账户已删除", success=True)
                 self._refresh_account_list()
         ctk.CTkButton(row, text="🗑", width=30, fg_color="transparent", text_color="#c62828", command=delete).pack(side="right", padx=4)
 
@@ -207,6 +215,7 @@ class SettingsPage(BasePage):
                 except ValueError:
                     bal = 0.0
                 add_account(self.app.conn, name_entry.get(), bal, icon_entry.get() or "💳")
+                Toast.show(dialog.winfo_toplevel(), "账户已保存", success=True)
                 dialog.destroy()
                 self._refresh_account_list()
         ctk.CTkButton(dialog, text="保存", command=save).pack(pady=12)
@@ -252,3 +261,4 @@ class SettingsPage(BasePage):
                     t.get("to_account_name", ""), t["note"],
                 ])
         mb.showinfo("导出成功", f"已导出 {len(txs)} 条记录到:\n{file_path}")
+        Toast.show(self.winfo_toplevel(), f"已导出 {len(txs)} 条记录", success=True)

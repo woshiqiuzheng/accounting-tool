@@ -3,6 +3,7 @@
 import customtkinter as ctk
 from ui.base_page import BasePage
 from ui.widgets.budget_progress import BudgetProgress
+from ui.widgets.toast import Toast
 from models.category import get_categories_by_type
 from models.budget import set_budget, get_all_budgets_for_month
 from utils.helpers import current_month_str
@@ -113,6 +114,7 @@ class BudgetPage(BasePage):
             for c in cats:
                 if f"{c['icon']} {c['name']}" == selected_cat:
                     set_budget(self.app.conn, c["id"], self.month_var.get(), amount)
+                    Toast.show(dialog.winfo_toplevel(), "预算已设置", success=True)
                     dialog.destroy()
                     self._refresh_data()
                     return
@@ -131,4 +133,5 @@ class BudgetPage(BasePage):
         )
         if new_amount is not None:
             set_budget(self.app.conn, category_id, month, new_amount)
+            Toast.show(self.winfo_toplevel(), "预算已更新", success=True)
             self._refresh_data()

@@ -5,6 +5,7 @@ from typing import Optional, Callable
 from models.category import get_categories_by_type
 from models.account import get_all_accounts
 from utils.helpers import today_str
+from ui.widgets.toast import Toast
 
 
 class TransactionForm(ctk.CTkFrame):
@@ -208,6 +209,9 @@ class TransactionForm(ctk.CTkFrame):
             for s in status_list:
                 if s["category_id"] == category_id and s["percentage"] > 100:
                     self._show_budget_alert(s)
+
+        action = "更新" if self._transaction_id else "保存"
+        Toast.show(self.winfo_toplevel(), f"{action}成功", success=True)
 
         self.clear()
         if self.on_save:

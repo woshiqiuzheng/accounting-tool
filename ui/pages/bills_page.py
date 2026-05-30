@@ -5,6 +5,7 @@ import tkinter.messagebox as mb
 from ui.base_page import BasePage
 from ui.widgets.transaction_list import TransactionList
 from ui.widgets.transaction_form import TransactionForm
+from ui.widgets.toast import Toast
 from models.category import get_all_categories
 from models.transaction import delete_transaction
 
@@ -125,6 +126,7 @@ class BillsPage(BasePage):
         if not mb.askyesno("确认删除", "确定要删除这条账单记录吗？"):
             return
         delete_transaction(self.app.conn, transaction_id)
+        Toast.show(dialog.winfo_toplevel(), "删除成功", success=True)
         dialog.destroy()
         self._edit_dialog = None
         self._apply_filters()
