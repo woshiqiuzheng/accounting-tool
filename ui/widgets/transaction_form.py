@@ -38,7 +38,7 @@ class TransactionForm(ctk.CTkFrame):
             btn = ctk.CTkButton(
                 self.type_frame,
                 text=label,
-                width=120,
+                width=100,
                 height=36,
                 fg_color=("gray75", "gray30") if i == 0 else "transparent",
                 text_color=("black", "white"),
@@ -118,7 +118,8 @@ class TransactionForm(ctk.CTkFrame):
             btn = ctk.CTkButton(
                 self.category_frame,
                 text=f"{cat['icon']} {cat['name']}",
-                width=100, height=50,
+                width=90, height=38,
+                font=ctk.CTkFont(size=12),
                 fg_color="transparent",
                 text_color=("gray20", "gray80"),
                 hover_color=("gray80", "gray30"),
@@ -126,7 +127,7 @@ class TransactionForm(ctk.CTkFrame):
                 border_color=("gray65", "gray45"),
                 command=lambda cid=cat["id"]: self._select_category(cid),
             )
-            btn.grid(row=row, column=col, padx=4, pady=4, sticky="w")
+            btn.grid(row=row, column=col, padx=3, pady=3, sticky="w")
             self._category_buttons[cat["id"]] = btn
 
     def _select_category(self, category_id: Optional[int]):
