@@ -45,10 +45,8 @@ class SettingsPage(BasePage):
         ctk.CTkButton(self.cat_tab, text="+ 新增分类", width=100, command=self._add_category_dialog).pack(anchor="w", pady=(8, 4))
         ctk.CTkButton(self.cat_tab, text="🔄 重置为默认", width=120, fg_color="transparent", border_width=1,
                       command=self._reset_categories).pack(anchor="w", pady=(0, 8))
-        scroll = ctk.CTkScrollableFrame(self.cat_tab, fg_color="transparent")
-        scroll.pack(fill="both", expand=True)
-        self.cat_list_frame = ctk.CTkFrame(scroll, fg_color="transparent")
-        self.cat_list_frame.pack(fill="x")
+        self.cat_list_frame = ctk.CTkFrame(self.cat_tab, fg_color="transparent")
+        self.cat_list_frame.pack(fill="both", expand=True)
 
     def _refresh_category_list(self):
         for w in self.cat_list_frame.winfo_children():
@@ -130,10 +128,8 @@ class SettingsPage(BasePage):
 
     def _build_account_tab(self):
         ctk.CTkButton(self.acc_tab, text="+ 新增账户", width=100, command=self._add_account_dialog).pack(anchor="w", pady=(8, 4))
-        scroll = ctk.CTkScrollableFrame(self.acc_tab, fg_color="transparent")
-        scroll.pack(fill="both", expand=True)
-        self.acc_list_frame = ctk.CTkFrame(scroll, fg_color="transparent")
-        self.acc_list_frame.pack(fill="x")
+        self.acc_list_frame = ctk.CTkFrame(self.acc_tab, fg_color="transparent")
+        self.acc_list_frame.pack(fill="both", expand=True)
 
     def _refresh_account_list(self):
         for w in self.acc_list_frame.winfo_children():
